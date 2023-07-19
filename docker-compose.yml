@@ -1,0 +1,32 @@
+version: "3.1"
+
+services:
+  db:
+    container_name: postgres_security
+    image: postgres:11
+    environment:
+      POSTGRES_USER: caoimvin
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/jwt_security
+    volumes:
+      - db:/data/jwt_security
+    ports:
+      - 5332:5432
+    networks:
+      - db
+    restart: unless-stopped
+  adminer:
+    container_name: adminer_security
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
